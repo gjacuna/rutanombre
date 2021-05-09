@@ -1,10 +1,10 @@
 import json
 import urllib3
-from beautifulsoup4 import BeautifulSoup
+from bs4 import BeautifulSoup
 
 def lambda_handler(event, context):
     http = urllib3.PoolManager()
-    xpath_columnas = "/html/body/div[2]/div/table/tbody/tr[1]/td" # Forzada a la primera fila de la tabla!
+    
     r = http.request(
         'POST',
         'https://www.nombrerutyfirma.com/rut',
@@ -25,7 +25,7 @@ def lambda_handler(event, context):
     else:
         cols = rows[0].find_all('td')
         nombre = cols[0].text.strip()
-        rutSalida = cols[0].text.strip()
+        rutSalida = cols[1].text.strip()
         return {
             'statusCode': 200,
             'body': {
